@@ -7,11 +7,11 @@ React Flip Move
 
 
 
-This module was built to tackle the common but arduous problem of animating a list of items when the list's order changes.
+This module was built to tackle the common but surprisingly arduous problem of animating a list of items when the list's order changes in React.
 
-CSS transitions only work for CSS properties. If your list is shuffled, the items have rearranged themselves, but without the use of CSS. The DOM nodes don't know that their on-screen location has changed; they've just been removed and inserted elsewhere in the document.
+CSS transitions only work for CSS properties. If your list is shuffled, the items have rearranged themselves, but without the use of CSS. Neither the DOM nor React have a built-in way of animating this kind of update. Transitions between shuffles are important visual cues; they help our brains retain context when the page changes.
 
-Flip Move uses the [_FLIP technique_](https://aerotwist.com/blog/flip-your-animations/#the-general-approach) to work out what such a transition would look like, and fakes it using 60+ FPS hardware-accelerated CSS transforms.
+Flip Move bridges this gap using the [_FLIP technique_](https://aerotwist.com/blog/flip-your-animations/#the-general-approach). It does the math to work out what the animation would look like, and implements it using 60FPS hardware-accelerated CSS transforms.
 
 [![demo](https://s3.amazonaws.com/githubdocs/fm-main-demo.gif)](http://joshwcomeau.github.io/react-flip-move/examples/#/shuffle)
 
@@ -23,40 +23,6 @@ Flip Move uses the [_FLIP technique_](https://aerotwist.com/blog/flip-your-anima
   * <a href="http://joshwcomeau.github.io/react-flip-move/examples/#/square" target="_blank">__Fuscia Square__</a>
   * <a href="http://joshwcomeau.github.io/react-flip-move/examples/#/scrabble" target="_blank">__Scrabble__</a>
   * <a href="http://joshwcomeau.github.io/react-flip-move/examples/#/laboratory" target="_blank">__Laboratory__</a>
-
-## Table of Contents
-
-* [Installation](https://github.com/joshwcomeau/react-flip-move#installation)
-* [Features](https://github.com/joshwcomeau/react-flip-move#features)
-* [Quickstart](https://github.com/joshwcomeau/react-flip-move#quickstart)
-* [Compatibility](https://github.com/joshwcomeau/react-flip-move#compatibility)
-* [Enter/Leave Animations](https://github.com/joshwcomeau/react-flip-move#enterleave-animations)
-* [Options](https://github.com/joshwcomeau/react-flip-move#options)
-  * [children](https://github.com/joshwcomeau/react-flip-move#children)
-  * [easing](https://github.com/joshwcomeau/react-flip-move#easing)
-  * [duration](https://github.com/joshwcomeau/react-flip-move#duration)
-  * [delay](https://github.com/joshwcomeau/react-flip-move#delay)
-  * [staggerDurationBy](https://github.com/joshwcomeau/react-flip-move#staggerdurationby)
-  * [staggerDelayBy](https://github.com/joshwcomeau/react-flip-move#staggerdelayby)
-  * [enterAnimation](https://github.com/joshwcomeau/react-flip-move#enteranimation)
-  * [leaveAnimation](https://github.com/joshwcomeau/react-flip-move#leaveanimation)
-  * [maintainContainerHeight](https://github.com/joshwcomeau/react-flip-move#maintaincontainerheight)
-  * [onStart](https://github.com/joshwcomeau/react-flip-move#onstart)
-  * [onFinish](https://github.com/joshwcomeau/react-flip-move#onfinish)
-  * [onStartAll](https://github.com/joshwcomeau/react-flip-move#onstartall)
-  * [onFinishAll](https://github.com/joshwcomeau/react-flip-move#onfinishall)
-  * [style](https://github.com/joshwcomeau/react-flip-move#style)
-  * [className](https://github.com/joshwcomeau/react-flip-move#classname)
-  * [typeName](https://github.com/joshwcomeau/react-flip-move#typename)
-  * [disableAllAnimations](https://github.com/joshwcomeau/react-flip-move#disableallanimations)
-  * [getPosition](https://github.com/joshwcomeau/react-flip-move#getPosition)
-  * [HTML Attributes](https://github.com/joshwcomeau/react-flip-move#html-attributes)
-* [Gotchas](https://github.com/joshwcomeau/react-flip-move#gotchas)
-* [Changelog](https://github.com/joshwcomeau/react-flip-move#changelog)
-* [Contributions](https://github.com/joshwcomeau/react-flip-move#contributions)
-* [Development](https://github.com/joshwcomeau/react-flip-move#development)
-* [License](https://github.com/joshwcomeau/react-flip-move#license)
-
 
 
 ## Installation
