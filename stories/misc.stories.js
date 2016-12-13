@@ -79,5 +79,91 @@ import FlipMoveListItem from './helpers/FlipMoveListItem';
           </CustomComponent>
         </FlipMove>
       );
+    })
+    .add('Stacked FlipMoves', () => {
+      class Example extends React.Component {
+
+        constructor(props){
+          super(props);
+          this.state = {
+            firstSet: ['item 1', 'item 2', 'item 3', 'item 4', 'item 5'],
+            secondSet: ['item 6', 'item 7', 'item 8', 'item 9', 'item 10'],
+          };
+        }
+
+        onRemoveItem = () => {
+          const { firstSet } = this.state;
+
+          console.log(firstSet.slice(0, firstSet.length - 1))
+
+          this.setState({
+            firstSet: firstSet.slice(0, firstSet.length - 1),
+          });
+        };
+
+        onAddItem = () => {
+          this.setState({
+            firstSet: this.state.firstSet.concat(['item' + Math.random()]),
+          });
+        };
+
+        render(){
+          const {firstSet, secondSet} = this.state;
+
+          return (
+            <div>
+              <section>
+                <button onClick={this.onRemoveItem}>Remove item</button>
+                <button onClick={this.onAddItem}>Add item</button>
+              </section>
+
+              <ul>
+                <li style={{backgroundColor: 'rgba(255,0,0, 0.2)'}}>
+                  <header>
+                    <h2>FlipMove 1</h2>
+                  </header>
+                  <FlipMove typeName={'ul'} duration="2000" >
+                    {firstSet.map((item) => (
+                      <li
+                        key={item}
+                        style={{
+                          display: 'block',
+                          backgroundColor: 'rgba(255,0,0, 0.2)'
+                        }}
+                      >
+                        {console.log("Mapping", item)}
+                        { item }
+                      </li>
+                    ))}
+                  </FlipMove>
+                </li>
+                <li style={{backgroundColor: 'rgba(0,0,255, 0.2)'}}>
+                  <header>
+                    <h2>FlipMove 2</h2>
+                  </header>
+                  <FlipMove typeName={'ul'} duration="2000" >
+                    {secondSet.map((item) => (
+                      <li
+                        key={item}
+                        style={{
+                          display: 'block',
+                          backgroundColor: 'rgba(0,0,255, 0.2)'
+                        }}
+                      >
+                        { item }
+                      </li>
+                    ))}
+                  </FlipMove>
+                </li>
+              </ul>
+
+            </div>
+          );
+
+        }
+
+      }
+
+      return <Example />
     });
 });
