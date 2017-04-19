@@ -17,7 +17,8 @@
     "prepublish": "npm run build",
     "test": "./node_modules/.bin/karma start --single-run",
     "test:dev": "karma start karma.conf.js",
-    "storybook": "start-storybook -p 9001"
+    "storybook": "start-storybook -p 9001",
+    "flow": "flow"
   },
   "author": "Joshua Comeau <joshwcomeau@gmail.com>",
   "license": "MIT",
@@ -50,6 +51,7 @@
     "babel-plugin-transform-decorators-legacy": "1.3.4",
     "babel-plugin-transform-object-assign": "6.3.13",
     "babel-preset-es2015": "6.1.18",
+    "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "6.3.13",
     "babel-preset-stage-0": "6.1.18",
     "chai": "3.5.0",
@@ -58,6 +60,7 @@
     "eslint-config-airbnb": "12.0.0",
     "eslint-plugin-import": "1.16.0",
     "eslint-plugin-jsx-a11y": "2.2.3",
+    "flow-bin": "^0.44.2",
     "karma": "0.13.19",
     "karma-chai": "0.1.0",
     "karma-chrome-launcher": "0.2.2",
