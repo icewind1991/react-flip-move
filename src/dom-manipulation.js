@@ -1,3 +1,4 @@
+// @flow
 /**
  * React Flip Move
  * (c) 2016-present Joshua Comeau
@@ -8,14 +9,29 @@
  */
 import { findDOMNode } from 'react-dom';
 
+import type {
+  BoundingBox,
+  GetBoundingBox,
+  NodeData,
+  FlipMoveProps,
+} from './types';
 
-export function applyStylesToDOMNode({ domNode, styles }) {
-  // Can't just do an object merge because domNode.styles is no regular object.
+
+type ApplyStylesParams = {
+  domNode: HTMLElement,
+  styles: { [string]: string | number },
+};
+
+export function applyStylesToDOMNode({ domNode, styles }: ApplyStylesParams) {
+  // Sadly, we can't just merge in our styles, so we do each individually.
   // Need to do it this way for the engine to fire its `set` listeners.
+
+  /* eslint-disable no-param-reassign */
   Object.keys(styles).forEach((key) => {
-    // eslint-disable-next-line no-param-reassign
+    // $FlowFixMe: Bug with CSSStyleDeclaration objects - https://github.com/facebook/flow/issues/3733
     domNode.style[key] = styles[key];
   });
+  /* eslint-enable */
 }
 
 
@@ -35,6 +51,7 @@ export function whichTransitionEvent() {
   const el = document.createElement('fakeelement');
 
   const match = Object.keys(transitions).find(t => (
+    // $FlowFixMe: Bug with CSSStyleDeclaration objects - https://github.com/facebook/flow/issues/3733
     el.style[t] !== undefined
   ));
 
@@ -44,11 +61,17 @@ export function whichTransitionEvent() {
 }
 
 
+type BoxComparisonParams = {
+  childData: NodeData,
+  parentData: NodeData,
+  getPosition: GetBoundingBox,
+};
+
 export const getRelativeBoundingBox = ({
   childData,
   parentData,
   getPosition,
-}) => {
+}: BoxComparisonParams): BoundingBox => {
   const { domNode: childDomNode } = childData;
   const { domNode: parentDomNode } = parentData;
 
@@ -68,20 +91,13 @@ export const getRelativeBoundingBox = ({
 
 /** getPositionDelta
  * This method returns the delta between two bounding boxes, to figure out
- * how mant pixels on each axis the element has moved.
- *
- * @param {Object} childData - needs shape { domNode, boundingBox }
- * @param {Object} parentData - needs shape { domNode, boundingBox }
- * @param {Function} getPosition - the function called to get bounding boxes
- * for a DOM node. Defaults to `getBoundingClientRect`.
- *
- * @returns [{Number: left}, {Number: top}]
+ * how many pixels on each axis the element has moved.
  */
 export const getPositionDelta = ({
   childData,
   parentData,
   getPosition,
-}) => {
+}: BoxComparisonParams): [number, number] => {
   // TEMP: A mystery bug is sometimes causing unnecessary boundingBoxes to
   // remain. Until this bug can be solved, this band-aid fix does the job:
   const defaultBox = { top: 0, left: 0, right: 0, bottom: 0 };
@@ -116,13 +132,11 @@ export const getPositionDelta = ({
  * same place.
  *
  * This is a vital part of the FLIP technique.
- *
- * @param {Object} domNode - the node we'll be working with
- * @param {Object} boundingBox - the node's starting position.
- *
- * @returns null
  */
-export const removeNodeFromDOMFlow = (childData, verticalAlignment) => {
+export const removeNodeFromDOMFlow = (
+  childData: NodeData,
+  verticalAlignment: string
+): void => {
   const { domNode, boundingBox } = childData;
 
   // For this to work, we have to offset any given `margin`.
@@ -163,19 +177,17 @@ export const removeNodeFromDOMFlow = (childData, verticalAlignment) => {
  * This property creates a node that fills space, so that the parent
  * container doesn't collapse when its children are removed from the
  * document flow.
- *
- * @param {Object} domNode - the node we'll be working with
- * @param {Object} parentData - needs shape { domNode, boundingBox }
- * @param {Function} getPosition - the function called to get bounding boxes
- * for a DOM node. Defaults to `getBoundingClientRect`.
- *
- * @returns null
  */
+type updateHeightPlaceholderParams = {
+  domNode: HTMLElement,
+  parentData: NodeData,
+  getPosition: GetBoundingBox,
+}
 export const updateHeightPlaceholder = ({
   domNode,
   parentData,
-  getPosition,
-}) => {
+  getPosition
+}: updateHeightPlaceholderParams): void => {
   // We need to find the height of the container *without* the placeholder.
   // Since it's possible that the placeholder might already be present,
   // we first set its height to 0.
@@ -200,7 +212,8 @@ export const updateHeightPlaceholder = ({
   applyStylesToDOMNode({ domNode, styles });
 };
 
-export const getNativeNode = (element) => {
+type Node = HTMLElement | React$Component<any, any, any>;
+export const getNativeNode = (element: Node) => {
   // When running in a windowless environment, abort!
   if (typeof HTMLElement === 'undefined') {
     return null;
@@ -217,7 +230,7 @@ export const getNativeNode = (element) => {
   return findDOMNode(element);
 };
 
-export const createTransitionString = (index, props) => {
+export const createTransitionString = (index: number, props: FlipMoveProps) => {
   let { delay, duration } = props;
   const { staggerDurationBy, staggerDelayBy, easing } = props;
 

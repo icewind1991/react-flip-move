@@ -1,3 +1,4 @@
+// @flow
 /**
  * React Flip Move | propConverter
  * (c) 2016-present Joshua Comeau
@@ -29,6 +30,12 @@ import {
 } from './enter-leave-presets';
 import { isElementAnSFC, omit } from './helpers';
 
+import type {
+  FlipMoveProps,
+  FlipMoveAnimation,
+  FlipMoveAnimationPresets
+} from './types';
+
 
 // Define `process` global in case the consumer hasn't defined
 // process.env.NODE_ENV. We use 'var' to escape block scoping.
@@ -39,9 +46,9 @@ if (typeof process === 'undefined') {
 /* eslint-enable */
 
 
-function propConverter(ComposedComponent) {
+function propConverter(ComposedComponent: React$Component<any, any, any>) {
   class FlipMovePropConverter extends Component {
-    convertProps(props) {
+    convertProps(props: FlipMoveProps) {
       const { propTypes, defaultProps } = FlipMovePropConverter;
 
       // Create a non-immutable working copy
@@ -136,7 +143,10 @@ function propConverter(ComposedComponent) {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    convertAnimationProp(animation, presets) {
+    convertAnimationProp(
+      animation: FlipMoveAnimation,
+      presets: FlipMoveAnimationPresets
+    ) {
       let newAnimation;
 
       switch (typeof animation) {
@@ -184,48 +194,6 @@ function propConverter(ComposedComponent) {
       );
     }
   }
-
-  const animationPropTypes = PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool,
-    PropTypes.shape({
-      from: PropTypes.object,
-      to: PropTypes.object,
-    }),
-  ]);
-
-  FlipMovePropConverter.propTypes = {
-    children: PropTypes.node,
-    easing: PropTypes.string,
-    duration: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-    delay: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-    staggerDurationBy: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-    staggerDelayBy: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-    onStart: PropTypes.func,
-    onFinish: PropTypes.func,
-    onStartAll: PropTypes.func,
-    onFinishAll: PropTypes.func,
-    typeName: PropTypes.string,
-    appearAnimation: animationPropTypes,
-    enterAnimation: animationPropTypes,
-    leaveAnimation: animationPropTypes,
-    disableAllAnimations: PropTypes.bool,
-    getPosition: PropTypes.func,
-    maintainContainerHeight: PropTypes.bool.isRequired,
-    verticalAlignment: PropTypes.oneOf(['top', 'bottom']).isRequired,
-  };
 
   FlipMovePropConverter.defaultProps = {
     easing: 'ease-in-out',
