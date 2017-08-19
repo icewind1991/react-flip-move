@@ -4,12 +4,14 @@
 //                 Ville Saarinen <https://github.com/vsaarinen>
 // TypeScript Version: 2.3
 
-import { Component, ReactElement } from 'react';
+import { Component } from 'preact';
 
 export as namespace FlipMove;
 export = FlipMove;
 
-declare class FlipMove extends Component<FlipMove.FlipMoveProps, any> { }
+declare class FlipMove extends Component<FlipMove.FlipMoveProps, any> {
+    public render(): JSX.Element;
+}
 
 declare namespace FlipMove {
     type AnimationPreset = 'elevator' | 'fade' | 'accordionVertical' | 'accordionHorizontal' | 'none';
@@ -154,7 +156,7 @@ declare namespace FlipMove {
          * @param childElement  A reference to the React Element being animated.
          * @param domNode       A reference to the unadulterated DOM node being animated.
          */
-        onStart?(childElement: ReactElement<any>, domNode: HTMLElement): void;
+        onStart?(childElement: JSX.Element, domNode: HTMLElement): void;
 
         /**
          * A callback to be invoked **once per child element** at the end of the animation.
@@ -165,7 +167,7 @@ declare namespace FlipMove {
          * @param childElement  A reference to the React Element being animated.
          * @param domNode       A reference to the unadulterated DOM node being animated.
          */
-        onFinish?(childElement: ReactElement<any>, domNode: HTMLElement): void;
+        onFinish?(childElement: JSX.Element, domNode: HTMLElement): void;
 
         /**
          * A callback to be invoked **once per group** at the start of the animation.
@@ -181,7 +183,7 @@ declare namespace FlipMove {
          * @param childElements An array of the references to the React Element(s) being animated.
          * @param domNodes      An array of the references to the unadulterated DOM node(s) being animated.
          */
-        onStartAll?(childElements: Array<ReactElement<any>>, domNodes: Array<HTMLElement>): void;
+        onStartAll?(childElements: Array<JSX.Element>, domNodes: Array<HTMLElement>): void;
 
         /**
          * A callback to be invoked **once per group** at the end of the animation.
@@ -196,7 +198,7 @@ declare namespace FlipMove {
          * @param childElements An array of the references to the React Element(s) being animated.
          * @param domNodes      An array of the references to the unadulterated DOM node(s) being animated.
          */
-        onFinishAll?(childElements: Array<ReactElement<any>>, domNodes: Array<HTMLElement>): void;
+        onFinishAll?(childElements: Array<JSX.Element>, domNodes: Array<HTMLElement>): void;
 
         /**
          * Flip Move wraps your children in a container element. By default, this element is a div, but you may wish to
