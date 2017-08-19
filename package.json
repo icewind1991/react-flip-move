@@ -3,7 +3,6 @@
   "version": "2.9.14",
   "description": "Effortless animation between DOM changes (eg. list reordering) using the FLIP technique.",
   "main": "lib/index.js",
-  "typings": "typings/react-flip-move.d.ts",
   "files": [
     "dist",
     "lib",
@@ -18,7 +17,7 @@
     "build": "npm run build:lib && npm run build:umd && npm run build:umd:min",
     "flow": "flow",
     "flow-coverage": "flow-coverage-report -i 'src/**/*.js' -t html -t json -t text",
-    "prebuild": "npm run lint && flow check && npm run typescript && npm run test",
+    "prebuild": "npm run lint && flow check && npm run test",
     "prepublishOnly": "npm run build",
     "prepush": "npm run prebuild",
     "test": "NODE_ENV=test ./node_modules/.bin/karma start --single-run",
